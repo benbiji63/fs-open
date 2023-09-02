@@ -56,9 +56,28 @@ import { useState } from 'react';
 //   )
 // }
 
+
 const Header = props => {
   return <h1>{props.course}</h1>;
 };
+const Content = props => {
+  return (
+    <div>
+  <Part set={props.partDetails[0]}/>
+  <Part set={props.partDetails[1]}/>
+  <Part set={props.partDetails[2]}/>
+    </div>
+  );
+};
+
+const Part = props=>{
+  return(
+    <p>
+      {props.set.part}
+      {props.set.exercises}
+    </p>
+  )
+}
 
 const Footer = props => {
   return (
@@ -68,24 +87,6 @@ const Footer = props => {
   );
 };
 
-const Content = props => {
-  return (
-    <div>
-      <p>
-        {props.partDetails[0].part}
-        {props.partDetails[0].exercises}
-      </p>
-      <p>
-        {props.partDetails[1].part}
-        {props.partDetails[1].exercises}
-      </p>
-      <p>
-        {props.partDetails[2].part}
-        {props.partDetails[2].exercises}
-      </p>
-    </div>
-  );
-};
 const App = () => {
   const course = 'Half Stack application development';
   const part1 = 'Fundamentals of React';

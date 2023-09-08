@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+
+const ReviewButtons = ({ handleClick, text }) => (
+  <button onClick={handleClick}>{text}</button>
+);
+
+const Reviews = ({review,text})=>(
+  <p>{text} {review}</p>
+)
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+  const handleGood = () => {
+    const val = good + 1;
+    setGood(val);
+  };
+  const handleBad = () => {
+    const val = bad + 1;
+    setBad(val);
+  };
+  const handleNeutral = () => {
+    const val = neutral + 1;
+    setNeutral(val);
+  };
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Give Feedback</h1>
+      <ReviewButtons handleClick={handleGood} text={'good'} />
+      <ReviewButtons handleClick={handleBad} text={'Bad'} />
+      <ReviewButtons handleClick={handleNeutral} text={'Neutral'} />
+      <h2>Statistics</h2>
+      <Reviews review={good} text={'good'} />
+      <Reviews review={bad} text={'Bad'} />
+      <Reviews review={neutral} text={'Neutral'} />
+
     </>
-  )
+  );
 }
 
-export default App
+export default App;

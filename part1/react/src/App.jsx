@@ -4,7 +4,7 @@ import { useState } from 'react';
 import './App.css';
 
 // function App() {
-//   // const [count, setCount] = useState(0)
+//    const [count, setCount] = useState(0)
 //   const date = new Date;
 //   const a = 20;
 //   const b = 25;
@@ -170,19 +170,19 @@ import './App.css';
 //     setTotal(updatedRight + left)
 //   }
 
-//   // const handleLeftClick = () => {
-//   //   setAll(allClicks.concat('L'));
-//   //   const updatedLeft = left + 1;
-//   //   setLeft(updatedLeft);
-//   //   setTotal(updatedLeft + right);
-//   // };
+  // const handleLeftClick = () => {
+  //   setAll(allClicks.concat('L'));
+  //   const updatedLeft = left + 1;
+  //   setLeft(updatedLeft);
+  //   setTotal(updatedLeft + right);
+  // };
 
-//   // const handleRightClick = () => {
-//   //   setAll(allClicks.concat('R'));
-//   //   const updatedRight = right + 1;
-//   //   setRight(updatedRight);
-//   //   setTotal(left + updatedRight);
-//   // };
+  // const handleRightClick = () => {
+  //   setAll(allClicks.concat('R'));
+  //   const updatedRight = right + 1;
+  //   setRight(updatedRight);
+  //   setTotal(left + updatedRight);
+  // };
 
 //   return (
 //     <div>
@@ -198,7 +198,7 @@ import './App.css';
 // };
 
 // Conditional rendering
-// concst History = props => {
+// const History = props => {
 //   if (props.allClicks.length === 0) {
 //     return <div>the app is used by pressing the buttons</div>;
 //   }

@@ -6,7 +6,7 @@ const ReviewButtons = ({ handleClick, text }) => (
   <button onClick={handleClick}>{text}</button>
 );
 
-const Statistics = ({ stats,total }) => {
+const StatisticsLine = ({ stats,total }) => {
   if(total===0){
     return(
       <p>No feedback given</p>
@@ -14,11 +14,6 @@ const Statistics = ({ stats,total }) => {
   }
   return (
     <>
-      {/* <Statistic data={good} text={'good'} />
-      <Statistic data={bad} text={'Bad'} />
-      <Statistic data={neutral} text={'Neutral'} />
-      <Statistic data={avg} text={'Average'} />
-      <Statistic data={positiveVal} text={'Positive'} /> */}
       {stats.map(stat=><Statistic data={stat.val} text={stat.name} />)}
     </>
   );
@@ -62,7 +57,7 @@ function App() {
       <ReviewButtons handleClick={handleNeutral} text={'Neutral'} />
       <ReviewButtons handleClick={handleBad} text={'Bad'} />
       <h2>Statistics</h2>
-      <Statistics stats={stats} total = {good+bad+neutral} />
+      <StatisticsLine stats={stats} total = {good+bad+neutral} />
     </>
   );
 }

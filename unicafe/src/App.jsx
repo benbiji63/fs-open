@@ -6,10 +6,14 @@ const ReviewButtons = ({ handleClick, text }) => (
   <button onClick={handleClick}>{text}</button>
 );
 
-const Statistics = ({ stats }) => {
+const Statistics = ({ stats,total }) => {
+  if(total===0){
+    return(
+      <p>No feedback given</p>
+    )
+  }
   return (
     <>
-      <h2>Statistics</h2>
       {/* <Statistic data={good} text={'good'} />
       <Statistic data={bad} text={'Bad'} />
       <Statistic data={neutral} text={'Neutral'} />
@@ -42,13 +46,13 @@ function App() {
     setNeutral(val);
   };
   const avg = average(good, bad, neutral);
-  const positiveVal = positive(good, bad, neutral);
+  const positiveVal = positive(good , bad,  neutral);
   const stats = [
     { name: 'good', val: good },
     { name: 'neutral', val: neutral },
     { name: 'bad', val: bad },
     { name: 'average', val: avg },
-    { name: 'positive', val: positive },
+    { name: 'positive', val: positiveVal },
   ];
 
   return (
@@ -57,7 +61,8 @@ function App() {
       <ReviewButtons handleClick={handleGood} text={'Good'} />
       <ReviewButtons handleClick={handleNeutral} text={'Neutral'} />
       <ReviewButtons handleClick={handleBad} text={'Bad'} />
-      <Statistics stats={stats} />
+      <h2>Statistics</h2>
+      <Statistics stats={stats} total = {good+bad+neutral} />
     </>
   );
 }

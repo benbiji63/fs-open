@@ -1,27 +1,34 @@
 import { useState } from 'react';
 import './App.css';
+
 const average = (good, bad, neutral) => (good - bad) / (good + bad + neutral);
 const positive = (good, bad, neutral) => (good / (good + bad + neutral)) * 100;
+const numOfReviews = (good, bad, neutral) => good + bad + neutral;
+
 const ReviewButtons = ({ handleClick, text }) => (
   <button onClick={handleClick}>{text}</button>
 );
 
-const StatisticsLine = ({ stats,total }) => {
-  if(total===0){
-    return(
-      <p>No feedback given</p>
-    )
+const StatisticsLine = ({ stats, total }) => {
+  if (total === 0) {
+    return <p>No feedback given</p>;
   }
   return (
     <>
-      {stats.map(stat=><Statistic data={stat.val} text={stat.name} />)}
+      <table>
+        {stats.map(stat => (
+          <Statistic data={stat.val} text={stat.name} />
+        ))}
+      </table>
     </>
   );
 };
 const Statistic = ({ data, text }) => (
-  <p>
-    {text} {data}
-  </p>
+  <tr>
+    <td>{text}</td>
+    <td>{data}</td>
+  </tr>
+  //  {data}
 );
 
 function App() {
@@ -41,11 +48,13 @@ function App() {
     setNeutral(val);
   };
   const avg = average(good, bad, neutral);
-  const positiveVal = positive(good , bad,  neutral);
+  const positiveVal = positive(good, bad, neutral);
+  const total = numOfReviews(good, neutral, bad);
   const stats = [
     { name: 'good', val: good },
     { name: 'neutral', val: neutral },
     { name: 'bad', val: bad },
+    { name: 'all', val: total },
     { name: 'average', val: avg },
     { name: 'positive', val: positiveVal },
   ];
@@ -57,7 +66,7 @@ function App() {
       <ReviewButtons handleClick={handleNeutral} text={'Neutral'} />
       <ReviewButtons handleClick={handleBad} text={'Bad'} />
       <h2>Statistics</h2>
-      <StatisticsLine stats={stats} total = {good+bad+neutral} />
+      <StatisticsLine stats={stats} total={total} />
     </>
   );
 }

@@ -1,19 +1,13 @@
 import { useState } from 'react';
 import './App.css';
 
-const Header3  = ({text})=>(
-  <h3>{text}</h3>
-)
-  
+const Header3 = ({ text }) => <h3>{text}</h3>;
 
-const Paragraph  = ({text})=>(
-  <p>{text}</p>
-)
+const Paragraph = ({ text }) => <p>{text}</p>;
 
-
-const Button = ({handleClick,text})=>(
+const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>{text}</button>
-)
+);
 
 const App = () => {
   const anecdotes = [
@@ -26,30 +20,40 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.',
   ];
+
   const popularity = anecdotes.map(ele => {
     return { anecdote: ele, votes: 0 };
   });
-  const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(popularity);
-  console.log(votes);
-  console.log(selected);
+  const [mostVotedAnecdote, setMostVotedAnecdote] = useState('');
+  const findMostVoted = () =>
+    votes.sort((a, b) => (a.votes < b.votes ? 1 : -1))[0].anecdote;
+
+  const [selected, setSelected] = useState(0);
+
+  // console.log(votes);
+  // console.log(selected);
   const incrementVote = index => {
-    let arr = [...votes]
+    let arr = [...votes];
     arr[index].votes += 1;
     setVotes(arr);
+    const mv = findMostVoted();
+    setMostVotedAnecdote(mv);
   };
   const nextAnecdote = () => {
     const nextIndex = Math.floor(Math.random() * anecdotes.length);
     setSelected(nextIndex);
   };
-  
+
   return (
     <>
-      <Header3 text = {'Anecdote'}></Header3>
+      <Header3 text={'Anecdote of the day'}></Header3>
       <Paragraph text={anecdotes[selected]}></Paragraph>
       <Paragraph text={`Has ${votes[selected].votes} Votes`}> </Paragraph>
-      <Button handleClick={e => incrementVote(selected)}text={'Vote'}></Button>
-      <Button handleClick={e =>nextAnecdote()}text = {'Next'}></Button>
+      <Button handleClick={e => incrementVote(selected)} text={'Vote'}></Button>
+      <Button handleClick={e => nextAnecdote()} text={'Next'}></Button>
+      <Header3 text={'Anecdote with most votes'}></Header3>
+      <Paragraph text={mostVotedAnecdote}></Paragraph>
     </>
   );
 };

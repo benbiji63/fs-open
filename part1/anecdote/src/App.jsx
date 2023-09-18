@@ -15,8 +15,6 @@ const Button = ({handleClick,text})=>(
   <button onClick={handleClick}>{text}</button>
 )
 
-
-
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -36,7 +34,7 @@ const App = () => {
   console.log(votes);
   console.log(selected);
   const incrementVote = index => {
-    let arr = popularity
+    let arr = [...votes]
     arr[index].votes += 1;
     setVotes(arr);
   };

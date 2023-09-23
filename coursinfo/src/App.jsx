@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Course from './components/course.jsx'
 
 // function App() {
 //   const [count, setCount] = useState(0)
@@ -56,51 +57,86 @@ import { useState } from 'react';
 //   )
 // }
 
-const Header = props => {
-  return <h1>{props.course}</h1>;
-};
-const Content = props => {
-  return (
-    <div>
-      <Part set={props.partDetails[0]} />
-      <Part set={props.partDetails[1]} />
-      <Part set={props.partDetails[2]} />
-    </div>
-  );
-};
+// -------------
+// Split content into components to
+//  -----------
 
-const Part = props => {
-  return (
-    <p>
-      {props.set.name} {props.set.exercises}
-    </p>
-  );
-};
+// const Header = props => {
+//   return <h1>{props.course}</h1>;
+// };
+// const Content = props => {
+//   return (
+//     <div>
+//       <Part set={props.partDetails[0]} />
+//       <Part set={props.partDetails[1]} />
+//       <Part set={props.partDetails[2]} />
+//     </div>
+//   );
+// };
 
-const Footer = props => {
-  return (
-    <p>
-      Number of exercises {props.exercises.reduce((acc, num) => acc + num, 0)}
-    </p>
-  );
-};
+// const Part = props => {
+//   return (
+//     <p>
+//       {props.set.name} {props.set.exercises}
+//     </p>
+//   );
+// };
+
+// const Footer = props => {
+//   return (
+//     <p>
+//       Number of exercises {props.exercises.reduce((acc, num) => acc + num, 0)}
+//     </p>
+//   );
+// };
+
+// const App = () => {
+//   const course = {
+//     name: 'Half Stack application development',
+//     parts: [
+//       { name: 'Fundamentals of React', exercises: 10 },
+//       { name: 'Using props to pass data', exercises: 7 },
+//       { name: 'State of a component', exercises: 14 },
+//     ],
+//   };
+//   return (
+//     <div>
+//       <Header course={course.name} />
+//       <Content partDetails={course.parts} />
+//       <Footer exercises={course.parts.map(part => part.exercises)} />
+//     </div>
+//   );
+// };
+
+// --------------
+// Made the entire content  into a app component 
+// --------------
 
 const App = () => {
   const course = {
+    id: 1,
     name: 'Half Stack application development',
     parts: [
-      { name: 'Fundamentals of React', exercises: 10 },
-      { name: 'Using props to pass data', exercises: 7 },
-      { name: 'State of a component', exercises: 14 },
-    ],
-  };
-  return (
-    <div>
-      <Header course={course.name} />
-      <Content partDetails={course.parts} />
-      <Footer exercises={course.parts.map(part => part.exercises)} />
-    </div>
-  );
-};
+      {
+        name: 'Fundamentals of React',
+        exercises: 10,
+        id: 1
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7,
+        id: 2
+      },
+      {
+        name: 'State of a component',
+        exercises: 14,
+        id: 3
+      }
+    ]
+  }
+
+  return <Course course={course} />
+}
+
 
 export default App;

@@ -1,3 +1,3 @@
-const Para = ({ text }) => <p>{text}</p>;
+const Parts = ({ text }) => <p>{text}</p>;
 
-export default Para;
+export default Parts;

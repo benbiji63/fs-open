@@ -9,17 +9,20 @@ const App = () => {
   // useEffect(() => {
   //   setNewName();
   // }, []);
-  const checkIfAlreadyExist = (event, nameAdded) => {
-    event.preventDefault();
+  const checkIfAlreadyExist =  (nameAdded) => {
     if (persons.some(({name})=>name===nameAdded)) {
       alert(`${nameAdded} already added to phonebook`);
+      return true;
     } else {
-      console.log('Condition dissatisfied');
-      addPerson(nameAdded);
-      console.log(persons);
+      return false;
     }
   };
-  const addPerson = name => {
+  const addPerson =(event, name) => {
+    event.preventDefault();
+    console.log(p);
+    if(checkIfAlreadyExist(name)){
+      return null;
+    }
     setNewName(name);
     // console.log(newName);
     // console.log(name);
@@ -40,7 +43,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Form handleClick={checkIfAlreadyExist} handleChange={handleNameChange} />
+      <Form handleClick={addPerson} handleChange={handleNameChange} />
       <h2>Numbers</h2>
       <List items={persons} />
     </div>

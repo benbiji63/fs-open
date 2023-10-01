@@ -9,20 +9,31 @@ const App = () => {
   // useEffect(() => {
   //   setNewName();
   // }, []);
-
-  const addPerson = (event, name) => {
+  const checkIfAlreadyExist =  (nameAdded) => {
+    if (persons.some(({name})=>name===nameAdded)) {
+      alert(`${nameAdded} already added to phonebook`);
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const addPerson =(event, name) => {
     event.preventDefault();
+    console.log(p);
+    if(checkIfAlreadyExist(name)){
+      return null;
+    }
     setNewName(name);
-    console.log(newName);
-    console.log(name);
+    // console.log(newName);
+    // console.log(name);
 
     const newPerson = {
       name: newName,
       id: persons.length + 1,
     };
-    console.log(newPerson);
+    // console.log(newPerson);
     setPersons(persons.concat(newPerson));
-    console.log(persons);
+    // console.log(persons);
   };
   const handleNameChange = event => {
     console.log(event.target.value);

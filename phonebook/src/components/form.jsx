@@ -1,4 +1,5 @@
 const Form = ({handleClick,handleChange}) => {
+  console.log(handleClick);
   return (
     <form onSubmit={()=>handleClick(event,document.querySelector('#name').value)}>
       <div>

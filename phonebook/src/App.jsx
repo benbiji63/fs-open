@@ -3,24 +3,26 @@ import Form from './components/form';
 import List from './components/list';
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: 'Arto Hellas', id: 1,number:'123-456-7890' }]);
+  const [persons, setPersons] = useState([
+    { name: 'Arto Hellas', id: 1, number: '123-456-7890' },
+  ]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
 
   // useEffect(() => {
   //   setNewName();
   // }, []);
-  const checkIfAlreadyExist =  (nameAdded) => {
-    if (persons.some(({name})=>name===nameAdded)) {
+  const checkIfAlreadyExist = nameAdded => {
+    if (persons.some(({ name }) => name === nameAdded)) {
       alert(`${nameAdded} already added to phonebook`);
       return true;
     } else {
       return false;
     }
   };
-  const addPerson =(event, name,number) => {
+  const addPerson = (event, name, number) => {
     event.preventDefault();
-    if(checkIfAlreadyExist(name)){
+    if (checkIfAlreadyExist(name)) {
       return null;
     }
     setNewName(name);
@@ -30,7 +32,7 @@ const App = () => {
 
     const newPerson = {
       name: newName,
-      number:newNumber,
+      number: newNumber,
       id: persons.length + 1,
     };
     // console.log(newPerson);
@@ -38,13 +40,17 @@ const App = () => {
     console.log(persons);
   };
   const handleNameChange = event => {
-    setNewName(event.target.value);
+        setNewName(event.target.value);
   };
+  const handleNumberChange = event => {
+    setNewNumber(event.target.value);
+};
+
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <Form handleClick={addPerson} handleChange={handleNameChange} />
+      <Form handleClick={addPerson} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
       <List items={persons} />
     </div>

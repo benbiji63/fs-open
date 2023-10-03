@@ -1,4 +1,4 @@
-const Form = { handleClick, handleNameChange, handleNumberChange }(
+const Form = ({ handleClick, handleNameChange, handleNumberChange })=>(
   <form
     onSubmit={() =>
       handleClick(

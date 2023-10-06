@@ -1,5 +1,4 @@
 const List = ({ items }) => {
-  console.log(items[0]);
   return(
   <ul type={'none'}>
     {items.map(item => (

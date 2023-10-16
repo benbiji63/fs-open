@@ -3,22 +3,21 @@ import axios from 'axios';
 import Form from './components/form';
 import List from './components/list';
 import Search from './components/search';
+import phonBookServices from './services/phonebook';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
-  const [searchedContact, setSearchedContact] = useState(persons);
 
-  useEffect(() => {
-    console.log('Effect');
-    axios.get('http://localhost:3001/persons').then(response => {
-      console.log(response);
-      setPersons(response.data);
-      setSearchedContact(persons)
+  let allContacts = [];
+  const setContacts = () => {
+    phonBookServices.getPersons().then(contacts => {
+      allContacts = contacts;
+      setPersons(contacts);
     });
-  }, []);
-
+  };
+  useEffect(setContacts, []);
 
   const checkIfAlreadyExist = nameAdded => {
     if (persons.some(({ name }) => name === nameAdded)) {
@@ -42,14 +41,13 @@ const App = () => {
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
     };
-    // console.log(newPerson);
-    setPersons(persons.concat(newPerson));
-    console.log(persons);
+    phonBookServices.setPerson(newPerson);
+    setContacts();
   };
   const handleFilter = e => {
-    console.log(e.key);
+    console.log(allContacts);
+    setPersons(allContacts);
     if (e.key !== 'Enter') {
       return null;
     }
@@ -57,7 +55,9 @@ const App = () => {
     const filteredContacts = persons.filter(person =>
       person.name.toLowerCase().includes(contact)
     );
-    setSearchedContact(filteredContacts);
+    console.log(filteredContacts);
+    setPersons(filteredContacts);
+    console.log(persons);
   };
 
   const handleNameChange = event => {
@@ -78,7 +78,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <List items={searchedContact} />
+      <List items={persons} />
     </div>
   );
 };

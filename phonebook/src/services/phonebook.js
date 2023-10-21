@@ -11,4 +11,9 @@ const setPerson =  async (person) => {
   return request.then(res => res.data);
 };
 
-export default { getPersons,setPerson };
+const deletePerson =  async (id) => {
+  const request = axios.delete(`${baseUrl}/${id}`)
+  return request.then(res => res.data).catch(err=>console.log(err.status));
+};
+
+export default { getPersons,setPerson,deletePerson };

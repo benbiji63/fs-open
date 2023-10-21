@@ -1,3 +1,5 @@
+
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Form from './components/form';
@@ -13,11 +15,11 @@ const App = () => {
   let allContacts = [];
   const setContacts = () => {
     phonBookServices.getPersons().then(contacts => {
-      allContacts = contacts;
       setPersons(contacts);
     });
   };
-  useEffect(setContacts, []);
+  useEffect(() => setContacts, []);
+  allContacts = persons;
 
   const checkIfAlreadyExist = nameAdded => {
     if (persons.some(({ name }) => name === nameAdded)) {
@@ -46,7 +48,6 @@ const App = () => {
     setContacts();
   };
   const handleFilter = e => {
-    console.log(allContacts);
     setPersons(allContacts);
     if (e.key !== 'Enter') {
       return null;
@@ -55,9 +56,7 @@ const App = () => {
     const filteredContacts = persons.filter(person =>
       person.name.toLowerCase().includes(contact)
     );
-    console.log(filteredContacts);
     setPersons(filteredContacts);
-    console.log(persons);
   };
 
   const handleNameChange = event => {

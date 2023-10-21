@@ -5,7 +5,7 @@ const List = ({ items,deleteContact }) => {
       {items.map(item => (
         <li key={item.id}>
           <span>{`${item.name} ${item.number}`}</span>
-          <button onClick={()=>deleteContact(event,item.id)}>Delete Contact</button>
+          <button onClick={()=>deleteContact(event,item.id,item.name)}>Delete Contact</button>
         </li>
       ))}
     </ul>

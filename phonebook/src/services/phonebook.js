@@ -13,7 +13,7 @@ const setPerson =  async (person) => {
 
 const deletePerson =  async (id) => {
   const request = axios.delete(`${baseUrl}/${id}`)
-  return request.then(res => res.data).catch(err=>console.log(err.status));
+  return request.then(res => res.data);
 };
 
 export default { getPersons,setPerson,deletePerson };

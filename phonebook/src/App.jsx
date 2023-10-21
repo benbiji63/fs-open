@@ -1,7 +1,4 @@
-
-
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState, useEffect, useReducer } from 'react';
 import Form from './components/form';
 import List from './components/list';
 import Search from './components/search';
@@ -13,14 +10,10 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
 
   let allContacts = [];
-  const setContacts = () => {
-    phonBookServices.getPersons().then(contacts => {
-      setPersons(contacts);
-    });
-  };
-  useEffect(() => setContacts, []);
-  allContacts = persons;
 
+  // ----------
+  // Hel[er function]
+  // ----------
   const checkIfAlreadyExist = nameAdded => {
     if (persons.some(({ name }) => name === nameAdded)) {
       alert(`${nameAdded} already added to phonebook`);
@@ -30,23 +23,6 @@ const App = () => {
     }
   };
 
-  const addPerson = (event, name, number) => {
-    event.preventDefault();
-    if (checkIfAlreadyExist(name)) {
-      return null;
-    }
-    setNewName(name);
-    setNewNumber(number);
-    // console.log(newName);
-    // console.log(name);
-
-    const newPerson = {
-      name: newName,
-      number: newNumber,
-    };
-    phonBookServices.setPerson(newPerson);
-    setContacts();
-  };
   const handleFilter = e => {
     setPersons(allContacts);
     if (e.key !== 'Enter') {
@@ -66,6 +42,47 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
+  // ----------
+  //  Functions dealing with db
+  // ----------
+
+  const setContacts = () => {
+    phonBookServices.getPersons().then(contacts => {
+      setPersons(contacts);
+    });
+  };
+  useEffect(() => setContacts, []);
+  useEffect(() => setContacts, [persons]);
+  allContacts = persons;
+
+  const addPerson = (event, name, number) => {
+    event.preventDefault();
+    if (checkIfAlreadyExist(name)) {
+      return null;
+    }
+    setNewName(name);
+    setNewNumber(number);
+    // console.log(newName);
+    // console.log(name);
+
+    const newPerson = {
+      name: newName,
+      number: newNumber,
+    };
+    phonBookServices.setPerson(newPerson);
+    setContacts();
+  };
+
+  const deleteContact = (event, id, name) => {
+    event.preventDefault();
+    if (!(window.confirm(`Delete ${name} `))) {
+      return null;
+    }
+    phonBookServices.deletePerson(id);
+    setContacts();
+  };
+  // console.log(allContacts);
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -77,7 +94,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <List items={persons} />
+      <List items={persons} deleteContact={deleteContact} />
     </div>
   );
 };

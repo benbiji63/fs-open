@@ -16,7 +16,6 @@ const App = () => {
   // ----------
   const checkIfAlreadyExist = nameAdded => {
     if (persons.some(({ name }) => name === nameAdded)) {
-      alert(`${nameAdded} already added to phonebook`);
       return true;
     } else {
       return false;
@@ -33,6 +32,16 @@ const App = () => {
       person.name.toLowerCase().includes(contact)
     );
     setPersons(filteredContacts);
+  };
+  const changeContactNumber = (name,number) => {
+    const changeContact = window.confirm(
+      `${name} already added to phonebook, would you like to change the contact`
+    );
+
+    if (changeContact === true) {
+      const changePerson = persons.find(person => person.name === name);
+      phonBookServices.changeNumber(changePerson,number);
+    }
   };
 
   const handleNameChange = event => {
@@ -58,7 +67,8 @@ const App = () => {
   const addPerson = (event, name, number) => {
     event.preventDefault();
     if (checkIfAlreadyExist(name)) {
-      return null;
+      changeContactNumber(name,number);
+      return true;
     }
     setNewName(name);
     setNewNumber(number);
@@ -75,7 +85,7 @@ const App = () => {
 
   const deleteContact = (event, id, name) => {
     event.preventDefault();
-    if (!(window.confirm(`Delete ${name} `))) {
+    if (!window.confirm(`Delete ${name} `)) {
       return null;
     }
     phonBookServices.deletePerson(id);

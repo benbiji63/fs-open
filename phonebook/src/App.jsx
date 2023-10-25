@@ -1,18 +1,20 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect } from 'react';
 import Form from './components/form';
 import List from './components/list';
 import Search from './components/search';
+import Notification from './components/notification';
 import phonBookServices from './services/phonebook';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [notification, setNotification] = useState('Hai');
 
   let allContacts = [];
 
   // ----------
-  // Hel[er function]
+  // Helper function
   // ----------
   const checkIfAlreadyExist = nameAdded => {
     if (persons.some(({ name }) => name === nameAdded)) {
@@ -33,14 +35,14 @@ const App = () => {
     );
     setPersons(filteredContacts);
   };
-  const changeContactNumber = (name,number) => {
+  const changeContactNumber = (name, number) => {
     const changeContact = window.confirm(
       `${name} already added to phonebook, would you like to change the contact`
     );
 
     if (changeContact === true) {
       const changePerson = persons.find(person => person.name === name);
-      phonBookServices.changeNumber(changePerson,number);
+      phonBookServices.changeNumber(changePerson, number);
     }
   };
 
@@ -49,6 +51,16 @@ const App = () => {
   };
   const handleNumberChange = event => {
     setNewNumber(event.target.value);
+  };
+
+  const displayNotification = () => {
+    document.querySelector('#notification').classList.remove('hide');
+
+    toggleHide();
+    document.querySelector('#notification').classList.add('hide');
+    setTimeout(() => {
+      document.querySelector('#notification').classList.add('hide');
+    }, 2000);
   };
 
   // ----------
@@ -67,13 +79,11 @@ const App = () => {
   const addPerson = (event, name, number) => {
     event.preventDefault();
     if (checkIfAlreadyExist(name)) {
-      changeContactNumber(name,number);
+      changeContactNumber(name, number);
       return true;
     }
     setNewName(name);
     setNewNumber(number);
-    // console.log(newName);
-    // console.log(name);
 
     const newPerson = {
       name: newName,
@@ -81,6 +91,7 @@ const App = () => {
     };
     phonBookServices.setPerson(newPerson);
     setContacts();
+    displayNotification();
   };
 
   const deleteContact = (event, id, name) => {
@@ -91,11 +102,11 @@ const App = () => {
     phonBookServices.deletePerson(id);
     setContacts();
   };
-  // console.log(allContacts);
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification} />
       <Search handleEnter={handleFilter} />
       <h2>Add a new contact</h2>
       <Form

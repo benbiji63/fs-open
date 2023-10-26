@@ -53,14 +53,19 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
-  const displayNotification = () => {
-    document.querySelector('#notification').classList.remove('hide');
+  const displayNotification = (name,error) => {
+    let notification = document.querySelector('#notification');
+    if (error) {
+      notification.classList.add('error');
+    }else{
+      notification.classList.add('action');
+      setNotification(`Added ${name}`)
+    }
+    notification.classList.remove('hide');
 
-    toggleHide();
-    document.querySelector('#notification').classList.add('hide');
     setTimeout(() => {
-      document.querySelector('#notification').classList.add('hide');
-    }, 2000);
+      notification.classList.add('hide');
+    }, 6000);
   };
 
   // ----------
@@ -91,7 +96,7 @@ const App = () => {
     };
     phonBookServices.setPerson(newPerson);
     setContacts();
-    displayNotification();
+    displayNotification(name);
   };
 
   const deleteContact = (event, id, name) => {
